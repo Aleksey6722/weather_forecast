@@ -4,6 +4,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:weather_forecast/api/weather_api.dart';
 import 'package:weather_forecast/models/weather_forecast_daily.dart';
 import 'package:weather_forecast/widgets/city_view.dart';
+import 'package:weather_forecast/widgets/detail_view.dart';
+import 'package:weather_forecast/widgets/temp_view.dart';
 
 class WeatherForecastScreen extends StatefulWidget {
   const WeatherForecastScreen({super.key});
@@ -50,6 +52,11 @@ class _WeatherForecastScreenState extends State<WeatherForecastScreen> {
                   return Column(children: [
                     SizedBox(height: 50,),
                     CityView(snapshot: snapshot),
+                    SizedBox(height: 50,),
+                    TempView(snapshot: snapshot),
+                    SizedBox(height: 50,),
+                    DetailView(snapshot: snapshot),
+
                   ],);
                 } else {
                   return Center(child: SpinKitDoubleBounce(color: Colors.black87, size: 100,),);

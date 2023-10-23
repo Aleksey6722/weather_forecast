@@ -1,3 +1,5 @@
+import 'package:weather_forecast/utilities/constants.dart';
+
 class WeatherForecast {
   late City city;
   late String cod;
@@ -168,6 +170,10 @@ class WeatherList {
     data['pop'] = pop;
     // data['rain'] = rain;
     return data;
+  }
+
+  String getIconUrl() {
+    return Constants.WEATHER_IMAGES_URL + weather[0].icon + '.png';
   }
 }
 
