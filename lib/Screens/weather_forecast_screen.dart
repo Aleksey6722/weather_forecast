@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:weather_forecast/api/weather_api.dart';
 import 'package:weather_forecast/models/weather_forecast_daily.dart';
+import 'package:weather_forecast/widgets/bottom_list_view.dart';
 import 'package:weather_forecast/widgets/city_view.dart';
 import 'package:weather_forecast/widgets/detail_view.dart';
 import 'package:weather_forecast/widgets/temp_view.dart';
@@ -16,7 +17,7 @@ class WeatherForecastScreen extends StatefulWidget {
 
 class _WeatherForecastScreenState extends State<WeatherForecastScreen> {
   late Future<WeatherForecast> forecastObject;
-  String _cityName = 'London';
+  String _cityName = 'Oskemen';
 
   @override
   void initState() {
@@ -56,7 +57,8 @@ class _WeatherForecastScreenState extends State<WeatherForecastScreen> {
                     TempView(snapshot: snapshot),
                     SizedBox(height: 50,),
                     DetailView(snapshot: snapshot),
-
+                    SizedBox(height: 50,),
+                    BottomListView(snapshot: snapshot),
                   ],);
                 } else {
                   return Center(child: SpinKitDoubleBounce(color: Colors.black87, size: 100,),);
