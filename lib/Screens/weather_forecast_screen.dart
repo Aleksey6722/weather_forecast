@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:weather_forecast/Screens/city_screen.dart';
 import 'package:weather_forecast/api/weather_api.dart';
 import 'package:weather_forecast/models/weather_forecast_daily.dart';
 import 'package:weather_forecast/widgets/bottom_list_view.dart';
@@ -40,7 +41,20 @@ class _WeatherForecastScreenState extends State<WeatherForecastScreen> {
           onPressed: (){},
         ),
         actions: [
-          IconButton(onPressed: (){}, icon: Icon(Icons.location_city))
+          IconButton(
+            onPressed: () async {
+             var tappedName = await Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return CityScreen();
+              },),);
+             if(tappedName != null){
+               setState(() {
+                 _cityName= tappedName;
+                 forecastObject = WeatherApi().fetchWeatherForecastWithCity(cityName: _cityName);
+               });
+             }
+            },
+            icon: Icon(Icons.location_city),
+          )
         ],
       ),
       body: ListView(
