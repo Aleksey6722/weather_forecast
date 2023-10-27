@@ -13,14 +13,18 @@ class LocationScreen extends StatefulWidget {
 class _LocationScreenState extends State<LocationScreen> {
 
   void getLOcationData() async {
-    var weatherInfo = await WeatherApi().fetchWeatherForecast();
-    if(weatherInfo == null) {
-      print('WeatherInfo was null: $weatherInfo');
-      return;
+    try {
+      var weatherInfo = await WeatherApi().fetchWeatherForecast();
+      Navigator.push(context, MaterialPageRoute(builder: (context){
+        return WeatherForecastScreen(locationWeather: weatherInfo,);
+      }));
+    } catch(e) {
+      if(e.toString() == 'User denied Geolocation'){
+        Navigator.push(context, MaterialPageRoute(builder: (context){
+          return WeatherForecastScreen(locationWeather: null,);
+        }));
+      }
     }
-    Navigator.push(context, MaterialPageRoute(builder: (context){
-      return WeatherForecastScreen(locationWeather: weatherInfo,);
-    }));
   }
 
   @override

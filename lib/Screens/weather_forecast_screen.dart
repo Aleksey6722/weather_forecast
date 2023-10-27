@@ -26,8 +26,9 @@ class _WeatherForecastScreenState extends State<WeatherForecastScreen> {
   void initState() {
     super.initState();
     if(widget.locationWeather != null){
-      var loc = widget.locationWeather;
       forecastObject = Future.value(widget.locationWeather);
+    } else {
+      forecastObject = WeatherApi().fetchWeatherForecast(cityName: _cityName, isCity: true);
     }
     // forecastObject.then((weather) {
     //   print('the weather: ${weather.list![0].weather![0].main}');
@@ -45,7 +46,12 @@ class _WeatherForecastScreenState extends State<WeatherForecastScreen> {
           icon: Icon(Icons.my_location),
           onPressed: (){
             setState(() {
-              forecastObject = WeatherApi().fetchWeatherForecast();
+              try {
+                forecastObject = WeatherApi().fetchWeatherForecast();
+              } catch(e) {
+                print(e);
+                return;
+              }
             });
           },
         ),
@@ -84,8 +90,14 @@ class _WeatherForecastScreenState extends State<WeatherForecastScreen> {
                     BottomListView(snapshot: snapshot),
                   ],);
                 } else {
-                  return Center(child: SpinKitDoubleBounce(color: Colors.black87, size: 100,),);
-                }
+                  return Center(
+                    child: Text(
+                      'City not found\nPlease enter correct city',
+                        style: TextStyle(fontSize: 25),
+                        textAlign: TextAlign.center,
+                      ),
+                    );
+                  }
               }
             ),
           ),

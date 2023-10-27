@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:html';
+
 
 import 'package:weather_forecast/models/weather_forecast_daily.dart';
 import 'package:weather_forecast/utilities/constants.dart';
@@ -11,7 +11,7 @@ class WeatherApi {
   Future<WeatherForecast> fetchWeatherForecast({String? cityName, bool? isCity}) async {
 
     Location location = Location();
-    await location.getCurrentLocation();
+
 
     Map<String, String?> parameters;
     if(isCity == true){
@@ -22,6 +22,7 @@ class WeatherApi {
       };
       parameters = queryParameters;
     } else {
+      await location.getCurrentLocation();
       var queryParameters = {
         'APPID': Constants.WEATHER_APP_ID,
         'units': 'metric',
@@ -42,6 +43,7 @@ class WeatherApi {
    if(response.statusCode == 200) {
      return WeatherForecast.fromJson(json.decode(response.body));
    } else {
+     return Future.error('Error response');
      throw Exception('Error response');
    }
 
